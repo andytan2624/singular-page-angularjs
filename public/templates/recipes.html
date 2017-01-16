@@ -1,0 +1,41 @@
+<div class="grid-100 row controls">
+  <div class="grid-30">
+    <select ng-model="vm.myCategory" ng-options="category.name for category in vm.categories"
+      ng-change="vm.categoryChanged(vm.myCategory)">
+      <option value="">All Categories</option>
+    </select>
+  </div>
+  <div class="grid-70">
+    <div class="flush-right">
+      <button ng-click="vm.go('/add')">+ Add Recipe</button>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+
+<div class="grid-100 row" ng-show="!vm.recipes.length">
+  <div class="grid-70">
+    <p>No recipes found!</p>
+  </div>
+</div>
+
+<div class="grid-100 row addHover" ng-show="vm.recipes.length"
+  ng-repeat="recipe in vm.recipes">
+  <a href="#" ng-href="/#!/edit/{{ recipe._id }}">
+    <div class="grid-70">
+      <p>
+        {{ recipe.name }} - {{ recipe.description}}
+      </p>
+    </div>
+  </a>
+  <div class="hoverBlock">
+    <div class="grid-30">
+      <div class="flush-right">
+        <p>
+          <a href="#" ng-href="/#!/edit/{{ recipe._id }}"> <img src="images/edit.svg" height="12px"> Edit </a>
+          <a class="no-action-link" confirmed-click="vm.deleteRecipe(recipe._id, $index)" ng-confirm-click="Would you like to delete this recipe?"> <img src="images/delete.svg" height="12px"> Delete </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
