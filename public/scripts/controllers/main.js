@@ -52,6 +52,12 @@ angular.module('app')
         var vm = this;
 
         vm.errorMessages = [];
+
+        /**
+         * Based on the current path of the page, set the pageStatus to add or edit
+         * Which will be used to determine properties below
+         * @type {string}
+         */
         vm.pageStatus = $route.current.originalPath == '/add' ? 'add' : 'edit';
 
         // Function to redirect to a particular link
@@ -70,14 +76,18 @@ angular.module('app')
             vm.foodItems = response.data;
         });
 
-
+        /**
+         * If the pageStatus is edit, then get the recipe from the database
+         */
         if (vm.pageStatus == 'edit') {
             var recipeID = $route.current.params.id;
             dataService.getRecipe(recipeID, function(response) {
                 vm.recipe = response.data;
             });
 
-        } else {
+        }
+        // Otherwise if we're adding a new recipe, then set recipe to be an object with necessary products
+        else {
             vm.recipe = {
                 'ingredients': [],
                 'steps': []
@@ -114,6 +124,9 @@ angular.module('app')
                 function(response) {
                     vm.errorMessages = [];
                     var fieldErrors = response.data.errors;
+                    /**
+                     * Go through each fieldError and go through that fieldError array to get the error messages
+                     */
                     for (var fieldError in fieldErrors) {
                         // Property belongs to the object, and not just inherited
                         if (fieldErrors.hasOwnProperty(fieldError)) {
@@ -130,6 +143,9 @@ angular.module('app')
                 function(response) {
                     vm.errorMessages = [];
                     var fieldErrors = response.data.errors;
+                    /**
+                     * Go through each fieldError and go through that fieldError array to get the error messages
+                     */
                     for (var fieldError in fieldErrors) {
                         // Property belongs to the object, and not just inherited
                         if (fieldErrors.hasOwnProperty(fieldError)) {
@@ -140,9 +156,7 @@ angular.module('app')
                         }
                     }
                 });
-
             }
         };
-
     })
 ;

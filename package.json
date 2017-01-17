@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon ./src/index.js localhost 5000",
-    "db": "node ./src/api/data/seed.js"
+    "db": "node ./src/api/data/seed.js",
+    "test": "karma start karma.conf.js"
   },
   "author": "Treehouse Island, Inc.",
   "license": "ISC",
@@ -18,6 +19,12 @@
     "nedb": "^1.8.0"
   },
   "devDependencies": {
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-cli": "^1.0.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2",
     "nodemon": "^1.9.1"
   }
 }
