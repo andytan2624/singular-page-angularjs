@@ -47,7 +47,7 @@ angular.module('app')
         };
 
     }])
-    .controller('RecipeDetailController', function($scope, dataService, $route) {
+    .controller('RecipeDetailController', function($scope, dataService, $route, $location) {
 
         var vm = this;
 
@@ -106,7 +106,7 @@ angular.module('app')
 
         // Add a step for a recipe
         vm.addStep = function() {
-            vmr.ecipe.steps.push({"description": ''});
+            vm.recipe.steps.push({"description": ''});
         };
 
         // Add a ingrediant for a recipe
@@ -119,9 +119,11 @@ angular.module('app')
             if (vm.pageStatus == 'edit') {
                 var recipeID = $route.current.params.id;
                 dataService.updateRecipe(recipeID, vm.recipe, function(response) {
-
+                    console.log('TINTIN');
+                    $location.path( '/' );
                 },
                 function(response) {
+                    console.log('ARGH');
                     vm.errorMessages = [];
                     var fieldErrors = response.data.errors;
                     /**
@@ -139,7 +141,10 @@ angular.module('app')
                 });
 
             } else {
-                dataService.addRecipe(vm.recipe, function(response) {},
+                dataService.addRecipe(vm.recipe,
+                function(response) {
+                    $location.path( '/' );
+                },
                 function(response) {
                     vm.errorMessages = [];
                     var fieldErrors = response.data.errors;
